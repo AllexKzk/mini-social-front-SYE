@@ -6,7 +6,10 @@ function App() {
   useEffect(() => {
     fetch("https://rich-teal-leopard-gown.cyclic.app/api/")
       .then(data => data.json())
-      .then(json => setMessage(json.message))
+      .then(json => {
+        console.log(json.message.message)
+        setMessage(json.message.message)
+      })
   }, []);
 
   return (
