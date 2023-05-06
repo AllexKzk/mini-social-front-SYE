@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       It's test message!
-      <p>{messageFromServer}</p>
+      {messageFromServer.length ? <p>{messageFromServer}</p> : <></>}
     </div>
   );
 }
