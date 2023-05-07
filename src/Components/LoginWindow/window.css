@@ -1,0 +1,16 @@
+.window {
+    height: 60vh; 
+    width: 60vh;
+    margin: auto; 
+    border: 3px solid black; 
+    border-radius: 32px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-end;
+}
+
+.input-block {
+    display: flex; 
+    flex-direction: column;
+    margin: 5%;
+}

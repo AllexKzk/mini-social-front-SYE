@@ -1,0 +1,25 @@
+.customTextArea {
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0;
+    resize: none;
+    border: none;
+    height: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    font-size: medium;
+}
+
+.customTextArea:focus {
+    outline: none;
+}
+
+.text{
+    font-size: medium;
+}
+
+.activeBox:hover{
+    background: rgba(0, 0, 0, 0.1);
+    transition-duration: 500ms;
+}
