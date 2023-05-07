@@ -2,7 +2,7 @@ import { IRegisterData, ILoginData, IAuthorizedUser, IUser } from "./interfaces"
 import { updateData } from "../storage/AuthUser";
 import { store } from "../storage/Store";
 
-const apiUrl = 'https://rich-teal-leopard-gown.cyclic.app/';//'http://localhost:5000/api';
+const apiUrl = 'https://rich-teal-leopard-gown.cyclic.app';//'http://localhost:5000/api';
 
 interface IBodyRequest {
     method: string,
