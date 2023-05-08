@@ -4,11 +4,14 @@ import { useState } from "react";
 import { store } from "../storage/Store";
 import { useParams } from "react-router-dom";
 import { getProfile, updateProfileSettings } from "../api/apiWorker";
-import { updateData } from "../storage/AuthUser";
 import HiddenTextField from "../Components/InputText/HiddenTextField";
+import PostInput from "../Components/InputText/PostInput";
+import PostsCollection from "../Components/Posts/PostsCollection";
+import AvatarEdditable from "../Components/Avatar/AvatarEdditable";
 
 export default function Profile() {
     const [profile, setProfile] = useState<IUser | undefined>(undefined);
+    const [edditable, setEdditable] = useState(false);
     const {userId} = useParams<{userId: string}>();
     
     useState(() => {
@@ -16,29 +19,39 @@ export default function Profile() {
         .then((userData: IUser) => {
             setProfile(userData);
         });
+
+        if (sessionStorage.getItem('id') === userId)
+            setEdditable(true);                         //it's my profile
     });
 
     const updateBio = async (newBio: string) => {
-        store.dispatch(updateData({...store.getState(), bio: newBio})); //save in Redux
-        updateProfileSettings('bio');                                   //send Redux to the server
+        updateProfileSettings('bio', newBio);       //send to the server
     }
 
     return(
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{marginTop: 5}}>
             {
                 profile ? 
+                <>
                 <Paper>
-                    <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                        <Box sx={{width: '200px', height: '200px', backgroundColor: 'grey'}}/>
-                        <Box sx={{width: '100%', height: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'start'}}>
+                    <Box sx={{height: '20vh', width: 'auto', display: 'flex', flexDirection: 'row'}}>
+                        <Box sx={{width: '20vh', height: '20vh'}}>
+                            <AvatarEdditable isEdditable={edditable} path={profile.avatar}/>
+                        </Box>
+                        <Box sx={{height: 'auto', display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                             <Typography variant="h2" alignSelf={'start'}>
                                 {`${profile?.name} ${profile?.surname}`}
                             </Typography>
                             <Typography variant="button"> Монография: </Typography>
-                            <HiddenTextField callback={(text: string) => updateBio(text)} prepText={profile.bio || ''}/>
+                            <HiddenTextField isEdditable={edditable} callback={(text: string) => updateBio(text)} prepText={profile.bio || ''}/>
                         </Box>
                     </Box>
                 </Paper>
+                {
+                    edditable ? <PostInput label="Всё ещё жив?"/> : <> </>
+                }
+                <PostsCollection sources={[userId!]}/>
+                </>
                 :
                 <></>
             }

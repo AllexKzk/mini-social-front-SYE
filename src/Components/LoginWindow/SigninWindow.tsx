@@ -1,5 +1,5 @@
 import { Alert, AlertColor, Box, Button, Paper, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./window.css";
 import { ILoginData } from "../../api/interfaces";
 import { login } from "../../api/apiWorker";
@@ -22,11 +22,10 @@ export default function SigninWindow() {
     const loginUser = async () => {
         login(data).then(() => {
             setAlert({severity: 'success', message: 'Authorized'});
-            setTimeout(() => navigate(`/user/${store.getState().id}`), 100);
+            navigate(`/user/${store.getState().id}`);
         }).catch((err: Error) => {
             setAlert({severity: 'error', message: err.message});
         });
-        
     };
 
     return (

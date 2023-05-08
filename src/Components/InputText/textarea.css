@@ -1,10 +1,8 @@
 .customTextArea {
-    min-width: 100%;
-    max-width: 100%;
-    padding: 0;
+    min-width: auto;
+    margin: 1vh;
     resize: none;
     border: none;
-    height: auto;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -13,6 +11,14 @@
 
 .customTextArea:focus {
     outline: none;
+    border-radius: 4px;
+    box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    transition-duration: 400ms;
+}
+
+.customTextArea:hover {
+    box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    transition-duration: 400ms;
 }
 
 .text{

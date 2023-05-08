@@ -1,25 +1,23 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { IAuthorizedUser } from '../api/interfaces';
+import { IAuthorizedUser, IUser } from '../api/interfaces';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: IAuthorizedUser = {
     id: '',
-    login: '',
-    password: '',
-    name: '',
-    surname: '',
-    bio: ''
+    token: ''
 };
 
 export const AuthUser = createSlice({
     name: 'User',
     initialState,
     reducers: {
-        updateData(state, action: PayloadAction<IAuthorizedUser>){
+        setUser(state, action: PayloadAction<IAuthorizedUser>){
+            sessionStorage.setItem('token', action.payload.token);
+            sessionStorage.setItem('id', action.payload.id);
             return action.payload;
         }
     }
 });
 
 export default AuthUser.reducer;
-export const {updateData} = AuthUser.actions;
+export const {setUser} = AuthUser.actions;

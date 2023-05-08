@@ -13,14 +13,11 @@ export interface ILoginData {
 export interface IUser {
     name: string,
     surname: string,
+    avatar: string,
     bio: string | undefined
 }
 
 export interface IAuthorizedUser {
     id: string,
-    login: string,
-    password: string,
-    name: string,
-    surname: string,
-    bio: string | undefined
+    token: string
 }

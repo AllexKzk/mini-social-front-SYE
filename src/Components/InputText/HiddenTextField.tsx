@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import './textarea.css'
-import { current } from "@reduxjs/toolkit";
 
 interface IHiddenTextField {
     prepText: string,
-    callback: (text: string) => void
+    callback: (text: string) => void,
+    isEdditable: boolean
 }
 
 export default function HiddenTextField(props: IHiddenTextField){
@@ -17,9 +17,6 @@ export default function HiddenTextField(props: IHiddenTextField){
         prev: string
     }; 
     const [input, setInput] = useState<ITextInput>({current: props.prepText, prev: props.prepText});
-
-    useEffect(() => {
-    });
 
     const undoChanges = () => {
         setInput({...input, current: input.prev}); //current changes set to prev
@@ -31,13 +28,14 @@ export default function HiddenTextField(props: IHiddenTextField){
         props.callback(input.current);              //send to server
     };
 
-    return (
-        <Box sx={{width: '100%', height: '100%'}} onClick={ () => {if (!focused ) setFocused(true)} } className={focused ? '' : "activeBox"}>
+    return ( 
+            <Box sx={{width: '100%', height: '100%'}} onClick={ () => {if (!focused ) setFocused(true)} } className={(focused || !props.isEdditable) ? '' : "activeBox"}>
             {
-                focused ? 
-                <Box sx={{height: 'inherit', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                focused && props.isEdditable ? 
+                <Box sx={{height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
                     <TextareaAutosize 
                         autoFocus
+                        minRows={3}
                         maxRows={3}
                         value={input.current} 
                         className="customTextArea" 
