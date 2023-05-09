@@ -5,9 +5,19 @@ import { useParams } from "react-router-dom";
 import { store } from "../storage/Store";
 import { IFriend } from "../api/interfaces";
 
-export default function SubscribeButton(){
+export default function SubscribeButton(props: {hidden: boolean}){
     const [isFriend, setFriend] = useState(false);
     const {userId} = useParams<{userId: string}>();
+
+    useEffect(() => {
+        if (!store.getState().data?.friends || !sessionStorage.getItem('id'))
+            authByToken().then(() => findInFollows());  
+        else
+            findInFollows();
+    }, []);
+
+    if(props.hidden)
+        return null;
 
     const findInFollows = () => {
         const friends = store.getState().data?.friends || [];
@@ -20,13 +30,6 @@ export default function SubscribeButton(){
         }
         setFriend(false);
     }
-
-    useEffect(() => {
-        if (!store.getState().data?.friends || !sessionStorage.getItem('id'))
-            authByToken().then(() => findInFollows());  
-        else
-            findInFollows();
-    }, []);
 
     const follow = () => {
         if (sessionStorage.getItem('id') && userId)

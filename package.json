@@ -1,7 +1,6 @@
 {
   "name": "share-ur-existence",
   "version": "0.1.0",
-  "homepage": ".",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -17,6 +16,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
+    "serve": "^14.2.0",
     "typescript": "^4.9.5"
   },
   "scripts": {

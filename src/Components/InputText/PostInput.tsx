@@ -7,13 +7,17 @@ import { useRef, useState } from "react";
 import { createPost } from "../../api/apiWorker";
 
 interface ITextPrev {
-    label: string
+    label: string,
+    hidden: boolean
 }
 
 export default function PostInput(props: ITextPrev) {
     const [postText, setText] = useState('');
     const inputFile = useRef<HTMLInputElement | null>(null);
     const [file, setFile] = useState<FileList | null>(null);
+
+    if (props.hidden)
+        return null;
 
     const submitPost = () => {
         console.log('send:', postText, file ? file[0] : 'null');
