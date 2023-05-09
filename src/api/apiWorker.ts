@@ -1,9 +1,9 @@
 import { IRegisterData, ILoginData, IAuthorizedUser, IUser } from "./interfaces";
-import { setUser } from "../storage/AuthUser";
+import { setUser, setUserData } from "../storage/AuthUser";
 import { store } from "../storage/Store";
 import { IPostsCollection, IPost } from "../Components/Posts/IPost";
 
-export const serverUrl = 'https://rich-teal-leopard-gown.cyclic.app'; //'http://localhost:5000';
+export const serverUrl = 'https://rich-teal-leopard-gown.cyclic.app'; //local: 'http://localhost:5000';
 const apiUrl = `${serverUrl}/api`;
 
 interface IBodyRequest {
@@ -19,6 +19,38 @@ function send<Type>(reqUrl: string, body: IBodyRequest): Promise<Type> {
                 throw new Error(res.statusText);
             return res.json() as Promise<Type>;
         });
+}
+
+export function sendUnFollow(userId: string){
+    return send('unfollow', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: userId,
+            followerId: sessionStorage.getItem('id')
+        })
+    })
+    .catch((err: Error) => {
+        throw err;
+    });
+}
+
+export function sendFollow(userId: string){
+    return send('follow', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: userId,
+            followerId: sessionStorage.getItem('id')
+        })
+    })
+    .catch((err: Error) => {
+        throw err;
+    });
 }
 
 export function register(regData: IRegisterData){
@@ -62,6 +94,7 @@ export function getProfile(id: string){
         body: JSON.stringify({id: id})
     })
     .then((userData: IUser) => {
+        console.log(userData.friends);
         return userData;
     })
     .catch((err: Error) => {
@@ -97,7 +130,7 @@ export function authByToken(){
         })
     })
     .then((userData: IUser) => {
-        return userData;
+        store.dispatch(setUserData(userData));
     })
     .catch((err: Error) => {
         throw err;
@@ -171,6 +204,24 @@ export function uploadAvatar(img: File){
         method: 'POST',
         headers: undefined,
         body: form
+    })
+    .catch((err: Error) => {
+        throw err;
+    });
+}
+
+export function getFile(key: string, callback: (url: string) => void){
+    return send<{signedSrc: string}>('image', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            key: key
+        })
+    })
+    .then((data: {signedSrc: string}) => {
+        callback(data.signedSrc);
     })
     .catch((err: Error) => {
         throw err;

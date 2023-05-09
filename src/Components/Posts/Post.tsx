@@ -2,15 +2,23 @@ import { Paper, Box, Typography, Divider, IconButton } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { IPost } from "./IPost";
-import { likePost, serverUrl } from "../../api/apiWorker";
+import { getFile, likePost } from "../../api/apiWorker";
+import { useEffect, useState } from "react";
 
 export default function Post (props: {data: IPost}) {
+    const [imageUrl, setUrl] = useState('');
+
+    useEffect(() => {
+        if (props.data.imagePath)
+            getFile(props.data.imagePath, setUrl);
+    });
+
     return (
         <Paper id={props.data.id} sx={{margin: '1vh 0', height: 'auto'}}>
             <Box sx={{display: 'flex', flexDirection: 'column', margin: '1vh'}}>
                 <Typography sx={{fontWeight: 'bold'}}>{props.data.authorName} {props.data.authorSurname}</Typography>
                 <Typography>{props.data.caption}</Typography>
-                {props.data.imagePath ? <img src={`${serverUrl}/${props.data.imagePath}`}/> : <></>}
+                {props.data.imagePath ? <img src={imageUrl}/> : <></>}
                 <Box sx={{display: 'flex', justifyContent: 'end'}}>
                     <IconButton onClick={() => likePost(props.data.id)}>
                         { props.data.liked ? <FavoriteIcon/> : <FavoriteBorderIcon/> }

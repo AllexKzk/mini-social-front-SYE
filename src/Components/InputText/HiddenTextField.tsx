@@ -32,10 +32,9 @@ export default function HiddenTextField(props: IHiddenTextField){
             <Box sx={{width: '100%', height: '100%'}} onClick={ () => {if (!focused ) setFocused(true)} } className={(focused || !props.isEdditable) ? '' : "activeBox"}>
             {
                 focused && props.isEdditable ? 
-                <Box sx={{height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
                     <TextareaAutosize 
                         autoFocus
-                        minRows={3}
                         maxRows={3}
                         value={input.current} 
                         className="customTextArea" 
@@ -51,7 +50,7 @@ export default function HiddenTextField(props: IHiddenTextField){
                     </Box>
                 </Box>
                 :
-                <Typography sx={{fontSize: 'medium'}}>
+                <Typography sx={{fontSize: 'medium', whiteSpace: 'pre-line'}}>
                     {input.current}
                 </Typography>
             }

@@ -4,7 +4,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: IAuthorizedUser = {
     id: '',
-    token: ''
+    token: '',
+    data: undefined 
 };
 
 export const AuthUser = createSlice({
@@ -15,9 +16,13 @@ export const AuthUser = createSlice({
             sessionStorage.setItem('token', action.payload.token);
             sessionStorage.setItem('id', action.payload.id);
             return action.payload;
+        },
+        setUserData(state, action: PayloadAction<IUser>){
+            console.log(action.payload)
+            return {...state, data: action.payload}
         }
     }
 });
 
 export default AuthUser.reducer;
-export const {setUser} = AuthUser.actions;
+export const {setUser, setUserData} = AuthUser.actions;
