@@ -9,19 +9,21 @@ import Progress from "../Progress";
 export default function AvatarEdditable(props: {isEdditable: boolean, path: string}) {
 
     const [avatarUrl, setUrl] = useState('');
-
+    const [isLoaded, setLoaded] = useState(false);
     useEffect(() => {
-        if (props.path)
-            getFile(props.path, setUrl);
-    });
+        if (props.path){
+            setLoaded(true);
+            getFile(props.path, setUrl).then(() => setLoaded(false));
+        }
+    }, []);
 
     return (
         <Box sx={{display: 'flex', height: '100%', width: '100%', position: 'relative'}}>
             {props.isEdditable ? <AvatarUpload /> : <></>}
             {
                 props.path ?
-                    <Progress isLoaded={avatarUrl.length > 0}>
-                        <img src={avatarUrl} className="avatar"/>
+                    <Progress isLoaded={isLoaded}>
+                        <img onError={() => setLoaded(true)} src={avatarUrl} className="avatar"/>
                     </Progress> :
                     <AccountCircleIcon sx={{height: 'auto', width: 'auto'}}/>
             }
