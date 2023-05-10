@@ -1,6 +1,6 @@
 import { Container, Paper, Box, Button } from "@mui/material";
 import { useEffect } from "react";
-import { Outlet,Link, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
     const navigate = useNavigate();

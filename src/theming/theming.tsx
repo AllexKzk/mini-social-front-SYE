@@ -3,6 +3,9 @@ import { PaletteOptions, createTheme } from '@mui/material';
 const colors = {
     primary: {
         main: '#ffb000'
+    },
+    divider: 'rgba(255, 201, 0, 0.6)',
+    action: {
     }
 };
 

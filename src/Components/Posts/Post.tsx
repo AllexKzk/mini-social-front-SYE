@@ -4,6 +4,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { IPost } from "./IPost";
 import { getFile, likePost } from "../../api/apiWorker";
 import { useEffect, useState } from "react";
+import Progress from "../Progress";
 
 export default function Post (props: {data: IPost}) {
     const [imageUrl, setUrl] = useState('');
@@ -31,7 +32,9 @@ export default function Post (props: {data: IPost}) {
             <Box sx={{display: 'flex', flexDirection: 'column', margin: '1vh'}}>
                 <Typography sx={{fontWeight: 'bold'}}>{props.data.authorName} {props.data.authorSurname}</Typography>
                 <Typography>{props.data.caption}</Typography>
-                {props.data.imagePath ? <img src={imageUrl}/> : <></>}
+                <Progress isLoaded={imageUrl.length > 0}>
+                    <img src={imageUrl}/>
+                </Progress>
                 <Box sx={{display: 'flex', justifyContent: 'end'}}>
                     <IconButton onClick={() => liked()}>
                         { info.isLiked ? <FavoriteIcon/> : <FavoriteBorderIcon/> }

@@ -11,6 +11,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { darkTheme } from "./theming/theming";
 
 function App() {
+
   return (
     <>
         <Provider store={store}>

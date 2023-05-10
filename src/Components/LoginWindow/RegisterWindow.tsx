@@ -5,6 +5,7 @@ import { useState } from "react";
 import {register} from "../../api/apiWorker";
 import { useNavigate } from "react-router-dom";
 import { store } from "../../storage/Store";
+import Progress from "../Progress";
 
 export default function RegisterWindow() {
     const navigate = useNavigate();
@@ -20,13 +21,17 @@ export default function RegisterWindow() {
         message: string
     };
     const [alert, setAlert] = useState<IAlert | undefined>(undefined);
+    const [progress, setProgress] = useState(false);
 
     const registerNewUser = async () => {
+        setProgress(true);
         register(data).then(() => {
             setAlert({severity: 'success', message: 'Authorised'});
             setTimeout(() => navigate(`/user/${store.getState().id}`), 100);
+            setProgress(false);
         }).catch((err: Error) => {
             setAlert({severity: 'error', message: err.message});
+            setProgress(false);
         });
         
     };
@@ -38,7 +43,9 @@ export default function RegisterWindow() {
             <TextField onChange={ev => setData({...data, Name: ev.target.value})} className="loginInput" label="Name"/>
             <TextField onChange={ev => setData({...data, Surname: ev.target.value})} className="loginInput" label="Surname"/>
             {alert ? <Alert severity={alert.severity}> {alert.message}</Alert> : <></>}
-            <Button onClick={() => registerNewUser()} variant="contained" sx={{marginTop: 2}}>Sign Up</Button>
+            <Progress isLoaded={progress}>
+                <Button onClick={() => registerNewUser()} variant="contained" sx={{marginTop: 2}}>Sign Up</Button>
+            </Progress>
         </Box>
     );
 }

@@ -3,7 +3,7 @@ import { setUser, setUserData } from "../storage/AuthUser";
 import { store } from "../storage/Store";
 import { IPostsCollection, IPost } from "../Components/Posts/IPost";
 
-export const serverUrl = 'https://rich-teal-leopard-gown.cyclic.app';
+export const serverUrl = 'http://localhost:5000'//'https://rich-teal-leopard-gown.cyclic.app' //'http://localhost:5000';
 const apiUrl = `${serverUrl}/api`;
 
 interface IBodyRequest {
@@ -21,8 +21,16 @@ function send<Type>(reqUrl: string, body: IBodyRequest): Promise<Type> {
         });
 }
 
+function cleanSend(reqUrl: string, body: IBodyRequest) {
+    return fetch(`${apiUrl}/${reqUrl}`, {...body})
+        .then(res => {
+            if (!res.ok)
+                throw new Error(res.statusText);
+    });
+}
+
 export function sendUnFollow(userId: string){
-    return send('unfollow', {
+    return cleanSend('unfollow', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -38,7 +46,7 @@ export function sendUnFollow(userId: string){
 }
 
 export function sendFollow(userId: string){
-    return send('follow', {
+    return cleanSend('follow', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -104,7 +112,7 @@ export function getProfile(id: string){
 }
 
 export function updateProfileSettings(field: string, value: string){
-    return send('update-user', {
+    return cleanSend('update-user', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -146,7 +154,7 @@ export function createPost(caption: string | null, img: File | null){
         form.append('caption', caption);
 
     form.append('authorId', sessionStorage.getItem('id')!);
-    return send('create-post', {
+    return cleanSend('create-post', {
         method: 'POST',
         headers: undefined,
         body: form
@@ -181,7 +189,7 @@ export function getPosts(sources: string[], minId: string){
 }
 
 export function likePost(postId: string){
-    return send('like', {
+    return cleanSend('like', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -202,7 +210,7 @@ export function uploadAvatar(img: File){
     form.append('avatar', img);
     form.append('id', sessionStorage.getItem('id')!);
 
-    return send('load-avatar', {
+    return cleanSend('load-avatar', {
         method: 'POST',
         headers: undefined,
         body: form

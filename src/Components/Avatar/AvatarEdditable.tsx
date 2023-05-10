@@ -4,6 +4,7 @@ import './avatar.css';
 import AvatarUpload from "./AvatarUpload";
 import { getFile, serverUrl } from "../../api/apiWorker";
 import { useState, useEffect } from "react";
+import Progress from "../Progress";
 
 export default function AvatarEdditable(props: {isEdditable: boolean, path: string}) {
 
@@ -17,7 +18,13 @@ export default function AvatarEdditable(props: {isEdditable: boolean, path: stri
     return (
         <Box sx={{display: 'flex', height: '100%', width: '100%', position: 'relative'}}>
             {props.isEdditable ? <AvatarUpload /> : <></>}
-            {props.path ? <img src={avatarUrl} className="avatar"/> : <AccountCircleIcon sx={{height: 'auto', width: 'auto'}}/>}
+            {
+                props.path ?
+                    <Progress isLoaded={avatarUrl.length > 0}>
+                        <img src={avatarUrl} className="avatar"/>
+                    </Progress> :
+                    <AccountCircleIcon sx={{height: 'auto', width: 'auto'}}/>
+            }
         </Box>
     );
 }

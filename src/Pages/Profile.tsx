@@ -13,7 +13,6 @@ export default function Profile() {
     const [profile, setProfile] = useState<IUser | undefined>(undefined);
     const [edditable, setEdditable] = useState(false);
     const {userId} = useParams();
-    
     useEffect(() => {
         if (userId && !profile)
             getProfile(userId).then((userData: IUser) => {

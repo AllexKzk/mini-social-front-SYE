@@ -1,16 +1,16 @@
 import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { authByToken, sendFollow, sendUnFollow } from "../api/apiWorker";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { store } from "../storage/Store";
 
 export default function SubscribeButton(){
-    const [isFriend, setFriend] = useState(false);
+    const [isFriend, setFriend] = useState<boolean | undefined>(undefined);
     const {userId} = useParams<{userId: string}>();
+    const navigate = useNavigate();
 
     const findInFollows = () => {
         const friends = store.getState().data?.friends || [];
-        console.log(friends, userId)
         for (const friend of friends){
             if (userId == friend.id){   //string and num compare
                 setFriend(true);
@@ -28,17 +28,24 @@ export default function SubscribeButton(){
     }, []);
 
     const follow = () => {
-        if (sessionStorage.getItem('id') && userId)
+        if (sessionStorage.getItem('id') && userId){
             sendFollow(userId);
-        //it'll perfect to handle 'else'
+            setFriend(true);
+        }
     }
     const unfollow = () => {
-        if (sessionStorage.getItem('id') && userId)
+        if (sessionStorage.getItem('id') && userId){
             sendUnFollow(userId);
+            setFriend(false);
+        }
     }
+    if (isFriend === undefined)
+        return null;
+    
     return (
         <Box sx={{width: 'auto'}}>
             {
+
                 !isFriend ? <Button fullWidth onClick={() => follow()}> Подписаться </Button> 
                             :
                             <Button fullWidth onClick={() => unfollow()}> Отписаться </Button> 
