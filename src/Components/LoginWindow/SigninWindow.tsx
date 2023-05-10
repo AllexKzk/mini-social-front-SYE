@@ -28,7 +28,8 @@ export default function SigninWindow() {
             navigate(`/user/${id}`);
             setProgress(false);
         }).catch((err: Error) => {
-            setAlert({severity: 'error', message: err.message});
+            console.log(err.message);
+            setAlert({severity: 'error', message: 'Неверный пароль или логин'});    //hardcode because of Cyclic can't rewrite status message x_x
             setProgress(false);
         });
     };
