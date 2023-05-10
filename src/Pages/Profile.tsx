@@ -31,10 +31,10 @@ export default function Profile() {
                 <Container>
                     <Paper>
                         <Box sx={{minHeight: '20vh', width: 'auto', display: 'flex', flexDirection: 'row'}}>
-                            <Box sx={{width: '20vh', minHeight: 'auto'}}>
+                            <Box sx={{maxWidth: '20vh', height: 'auto'}}>
                                 <AvatarEdditable isEdditable={edditable} path={profile.avatar}/>
                             </Box>
-                            <Box sx={{height: 'auto', margin: '1vh', display: 'flex', flexDirection: 'column', flexGrow: 1}}>
+                            <Box sx={{maxHeight: 'auto', margin: '1vh', display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                                 <Typography variant="h2" alignSelf={'start'}>
                                     {profile.name} {profile.surname}
                                 </Typography>

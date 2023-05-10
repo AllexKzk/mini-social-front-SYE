@@ -87,8 +87,9 @@ export const darkTheme = createTheme({
                     props: {className: 'avatarButton'},
                     style: {
                         position: 'absolute', 
-                        height: 'inherit', 
-                        width: 'inherit',
+                        width: '100%',
+                        height: '100%', 
+                        borderRadius: 0,
                         "&:hover": {
                             backgroundColor: 'rgba(0, 0, 0, 0.3)'
                         }

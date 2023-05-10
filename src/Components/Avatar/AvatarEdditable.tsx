@@ -25,7 +25,7 @@ export default function AvatarEdditable(props: {isEdditable: boolean, path: stri
                     <Progress isLoaded={isLoaded}>
                         <img onError={() => setLoaded(true)} src={avatarUrl} className="avatar"/>
                     </Progress> :
-                    <AccountCircleIcon sx={{height: 'auto', width: 'auto'}}/>
+                    <AccountCircleIcon sx={{height: '100%', width: '100%'}}/>
             }
         </Box>
     );

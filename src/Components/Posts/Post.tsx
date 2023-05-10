@@ -34,7 +34,7 @@ export default function Post (props: {data: IPost}) {
         <Paper id={props.data.id} sx={{margin: '1vh 0', height: 'auto'}}>
             <Box sx={{display: 'flex', flexDirection: 'column', margin: '1vh'}}>
                 <Typography sx={{fontWeight: 'bold'}}>{props.data.authorName} {props.data.authorSurname}</Typography>
-                <Typography>{props.data.caption}</Typography>
+                <Typography whiteSpace='pre-line'>{props.data.caption}</Typography>
                 {
                     imageUrl ? <Progress isLoaded={isImageLoading}>
                                     <img onError={() => setImageLoading(true)} src={imageUrl}/>
