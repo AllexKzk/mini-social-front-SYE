@@ -3,7 +3,7 @@ import { setUser, setUserData } from "../storage/AuthUser";
 import { store } from "../storage/Store";
 import { IPostsCollection, IPost } from "../Components/Posts/IPost";
 
-export const serverUrl = 'http://localhost:5000'//'https://rich-teal-leopard-gown.cyclic.app' //'http://localhost:5000';
+export const serverUrl = 'https://rich-teal-leopard-gown.cyclic.app';
 const apiUrl = `${serverUrl}/api`;
 
 interface IBodyRequest {
