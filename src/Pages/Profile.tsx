@@ -1,4 +1,4 @@
-import { Container, Typography, Box, Paper, Button} from "@mui/material";
+import { Container, Typography, Box, Paper} from "@mui/material";
 import { IUser } from "../api/interfaces";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -15,11 +15,10 @@ export default function Profile() {
     const {userId} = useParams();
     
     useEffect(() => {
-        if (userId)
+        if (userId && !profile)
             getProfile(userId).then((userData: IUser) => {
                 setProfile(userData);
             });
-
         if (sessionStorage.getItem('id') === userId)
             setEdditable(true);                         //it's my profile
     }, []);
@@ -36,17 +35,17 @@ export default function Profile() {
                             <Box sx={{width: '20vh', minHeight: 'auto'}}>
                                 <AvatarEdditable isEdditable={edditable} path={profile.avatar}/>
                             </Box>
-                            <Box sx={{height: 'auto', display: 'flex', flexDirection: 'column', flexGrow: 1}}>
+                            <Box sx={{height: 'auto', margin: '1vh', display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                                 <Typography variant="h2" alignSelf={'start'}>
                                     {profile.name} {profile.surname}
                                 </Typography>
                                 <Typography variant="button"> Монография: </Typography>
                                 <HiddenTextField isEdditable={edditable} callback={(text: string) => updateBio(text)} prepText={profile.bio || ''}/>
-                                <SubscribeButton hidden={!edditable}/>
+                                { edditable ? <></> : <SubscribeButton/> }
                             </Box>
                         </Box>
                     </Paper>
-                    <PostInput hidden={edditable} label="Всё ещё дышишь?"/>
+                    { edditable ? <PostInput label="Всё ещё дышишь?"/> : <></>}
                     <PostsCollection sources={[userId]}/>
             </Container>
         );

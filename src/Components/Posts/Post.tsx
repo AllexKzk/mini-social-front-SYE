@@ -7,12 +7,25 @@ import { useEffect, useState } from "react";
 
 export default function Post (props: {data: IPost}) {
     const [imageUrl, setUrl] = useState('');
+    const [info, setInfo] = useState<{isLiked: boolean, likesCount: string}>({
+        isLiked: props.data.liked, likesCount: props.data.likes
+    });
 
     useEffect(() => {
         if (props.data.imagePath)
             getFile(props.data.imagePath, setUrl);
-    });
+    }, []);
 
+    const liked = () => {
+        if (!info.isLiked){
+            likePost(props.data.id);
+            setInfo({
+                isLiked: true,
+                likesCount: 1 + info.likesCount
+            });
+        }
+    }
+ 
     return (
         <Paper id={props.data.id} sx={{margin: '1vh 0', height: 'auto'}}>
             <Box sx={{display: 'flex', flexDirection: 'column', margin: '1vh'}}>
@@ -20,9 +33,9 @@ export default function Post (props: {data: IPost}) {
                 <Typography>{props.data.caption}</Typography>
                 {props.data.imagePath ? <img src={imageUrl}/> : <></>}
                 <Box sx={{display: 'flex', justifyContent: 'end'}}>
-                    <IconButton onClick={() => likePost(props.data.id)}>
-                        { props.data.liked ? <FavoriteIcon/> : <FavoriteBorderIcon/> }
-                        <Typography sx={{fontSize: 24, marginLeft: 1}}>{props.data.likes ? props.data.likes : 0}</Typography>
+                    <IconButton onClick={() => liked()}>
+                        { info.isLiked ? <FavoriteIcon/> : <FavoriteBorderIcon/> }
+                        <Typography sx={{fontSize: 24, marginLeft: 1}}>{info.likesCount || 0}</Typography>
                     </IconButton>
                 </Box>
             </Box>

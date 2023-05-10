@@ -18,7 +18,7 @@ export default function PostsLine() {
     return (
         <Container>
             <Paper>
-                <Box margin={1}>
+                <Box>
                     <Typography variant="h4" align="center">
                         Лента новостей
                     </Typography>

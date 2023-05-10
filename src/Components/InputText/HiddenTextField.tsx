@@ -29,10 +29,10 @@ export default function HiddenTextField(props: IHiddenTextField){
     };
 
     return ( 
-            <Box sx={{width: '100%', height: '100%'}} onClick={ () => {if (!focused ) setFocused(true)} } className={(focused || !props.isEdditable) ? '' : "activeBox"}>
+            <Box sx={{width: '100%', height: '100%'}}>
             {
                 focused && props.isEdditable ? 
-                <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                <Box sx={{'display': 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
                     <TextareaAutosize 
                         autoFocus
                         maxRows={3}
@@ -40,7 +40,7 @@ export default function HiddenTextField(props: IHiddenTextField){
                         className="customTextArea" 
                         onChange={(ev) => setInput({...input, current: ev.target.value})} //change current text field
                     />
-                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'end'}}>
+                    <Box sx ={{display: 'flex', flexDirection: 'row', justifyContent: 'end'}}>
                         <IconButton onClick={undoChanges}>
                             <CloseIcon/>
                         </IconButton>
@@ -50,9 +50,12 @@ export default function HiddenTextField(props: IHiddenTextField){
                     </Box>
                 </Box>
                 :
-                <Typography sx={{fontSize: 'medium', whiteSpace: 'pre-line'}}>
-                    {input.current}
-                </Typography>
+                <Box sx={{position: 'relative', height: '100%'}}>
+                    <Button className='hiddenInputButton' onClick={() => setFocused(true)} />
+                    <Typography className="hiddenInputText">
+                        {input.current}
+                    </Typography>
+                </Box>
             }
         </Box>
     );

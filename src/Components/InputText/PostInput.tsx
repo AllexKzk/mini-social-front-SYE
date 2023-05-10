@@ -7,17 +7,13 @@ import { useRef, useState } from "react";
 import { createPost } from "../../api/apiWorker";
 
 interface ITextPrev {
-    label: string,
-    hidden: boolean
+    label: string
 }
 
 export default function PostInput(props: ITextPrev) {
     const [postText, setText] = useState('');
     const inputFile = useRef<HTMLInputElement | null>(null);
     const [file, setFile] = useState<FileList | null>(null);
-
-    if (props.hidden)
-        return null;
 
     const submitPost = () => {
         console.log('send:', postText, file ? file[0] : 'null');
@@ -27,7 +23,7 @@ export default function PostInput(props: ITextPrev) {
     };
 
     return (
-        <Paper sx={{height: 'auto', width: 'auto', margin: '1vh 0', display: 'flex', flexDirection: 'column'}}>
+        <Paper className="postInput">
             <TextareaAutosize value={postText} onChange={(ev) => setText(ev.target.value)} placeholder={props.label} minRows={3} className="customTextArea"/>
             <Divider/>
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

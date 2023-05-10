@@ -20,22 +20,20 @@ export default function SigninWindow() {
     const [alert, setAlert] = useState<IAlert | undefined>(undefined);
 
     const loginUser = async () => {
-        login(data).then(() => {
+        login(data).then((id) => {
             setAlert({severity: 'success', message: 'Authorized'});
-            navigate(`/user/${store.getState().id}`);
+            navigate(`/user/${id}`);
         }).catch((err: Error) => {
             setAlert({severity: 'error', message: err.message});
         });
     };
 
     return (
-        <Box className="window">
-            <Box className="input-block">
-                <TextField onChange={ev => setData({...data, Login: ev.target.value})} margin="normal" variant="outlined" label="Login"/>
-                <TextField onChange={ev => setData({...data, Password: ev.target.value})} type="password" margin="normal" variant="outlined" label="Password"/>
-                {alert ? <Alert severity={alert.severity}> {alert.message}</Alert> : <></>}
-                <Button onClick={() => loginUser()} variant="contained" sx={{marginTop: 2}}>Sign In</Button>
-            </Box>
+        <Box sx={{display: 'flex', flexDirection: 'column', margin: '3vh'}}>
+            <TextField onChange={ev => setData({...data, Login: ev.target.value})} className="loginInput" label="Login"/>
+            <TextField onChange={ev => setData({...data, Password: ev.target.value})} className="loginInput" type="password" label="Password"/>
+            {alert ? <Alert severity={alert.severity}> {alert.message}</Alert> : <></>}
+            <Button onClick={() => loginUser()} variant="contained" sx={{marginTop: 2}}>Sign In</Button>
         </Box>
     );
 }

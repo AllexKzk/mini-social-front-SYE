@@ -15,7 +15,7 @@ export default function AvatarEdditable(props: {isEdditable: boolean, path: stri
     });
 
     return (
-        <Box sx={{display: 'flex', height: 'inherit', width: 'inherit', position: 'relative'}}>
+        <Box sx={{display: 'flex', height: '100%', width: '100%', position: 'relative'}}>
             {props.isEdditable ? <AvatarUpload /> : <></>}
             {props.path ? <img src={avatarUrl} className="avatar"/> : <AccountCircleIcon sx={{height: 'auto', width: 'auto'}}/>}
         </Box>

@@ -17,7 +17,7 @@ export default function AvatarUpload() {
         <IconButton onClick={() => inputFile.current?.click()}
                     onMouseEnter={() => setVisible(true)} 
                     onMouseLeave={() => setVisible(false)} 
-                    sx={{position: 'absolute', height: 'inherit', width: 'inherit'}}>
+                    className="avatarButton">
             {isVisible ? <AddAPhotoIcon sx={{height: '25%', width: '25%'}}/> : <></>}
             <input type='file' name='avatar' ref={inputFile} hidden onChange={(ev) => updateAvatar(ev.target.files)}/>
         </IconButton>

@@ -3,7 +3,7 @@ import { setUser, setUserData } from "../storage/AuthUser";
 import { store } from "../storage/Store";
 import { IPostsCollection, IPost } from "../Components/Posts/IPost";
 
-export const serverUrl = 'http://localhost:5000' //'https://rich-teal-leopard-gown.cyclic.app'; //local: 'http://localhost:5000';
+export const serverUrl = 'https://rich-teal-leopard-gown.cyclic.app';
 const apiUrl = `${serverUrl}/api`;
 
 interface IBodyRequest {
@@ -79,6 +79,7 @@ export function login(loginData: ILoginData){
     })
     .then((userData: IAuthorizedUser) => {
         store.dispatch(setUser(userData));
+        return userData.id;
     })
     .catch((err: Error) => {
         throw err;
@@ -155,7 +156,7 @@ export function createPost(caption: string | null, img: File | null){
     });
 }
 
-export function getPosts(sources: string[]){
+export function getPosts(sources: string[], minId: string){
     return send<IPost[]>('get-posts', {
         method: 'PUT',
         headers: {
@@ -163,7 +164,8 @@ export function getPosts(sources: string[]){
         },
         body: JSON.stringify({
             sources: sources,
-            reqUserId: sessionStorage.getItem('id')
+            reqUserId: sessionStorage.getItem('id'),
+            minId: minId
         })
     })
     .then((posts: IPost[]) => {

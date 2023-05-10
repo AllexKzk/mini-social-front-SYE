@@ -32,15 +32,13 @@ export default function RegisterWindow() {
     };
 
     return (
-        <Box className="window">
-            <Box className="input-block">
-                <TextField onChange={ev => setData({...data, Login: ev.target.value})} margin="normal" variant="outlined" label="Login"/>
-                <TextField type="password" onChange={ev => setData({...data, Password: ev.target.value})} margin="normal" variant="outlined" label="Password"/>
-                <TextField onChange={ev => setData({...data, Name: ev.target.value})} margin="normal" variant="outlined" label="Name"/>
-                <TextField onChange={ev => setData({...data, Surname: ev.target.value})} margin="normal" variant="outlined" label="Surname"/>
-                {alert ? <Alert severity={alert.severity}> {alert.message}</Alert> : <></>}
-                <Button onClick={() => registerNewUser()} variant="contained" sx={{marginTop: 2}}>Sign Up</Button>
-            </Box>
+        <Box sx={{display: 'flex', flexDirection: 'column', margin: '3vh'}}>
+            <TextField onChange={ev => setData({...data, Login: ev.target.value})} className="loginInput" label="Login"/>
+            <TextField type="password" onChange={ev => setData({...data, Password: ev.target.value})} className="loginInput" label="Password"/>
+            <TextField onChange={ev => setData({...data, Name: ev.target.value})} className="loginInput" label="Name"/>
+            <TextField onChange={ev => setData({...data, Surname: ev.target.value})} className="loginInput" label="Surname"/>
+            {alert ? <Alert severity={alert.severity}> {alert.message}</Alert> : <></>}
+            <Button onClick={() => registerNewUser()} variant="contained" sx={{marginTop: 2}}>Sign Up</Button>
         </Box>
     );
 }
